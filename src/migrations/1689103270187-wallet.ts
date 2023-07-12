@@ -7,23 +7,36 @@ export class Wallet1689103270187 implements MigrationInterface {
         name: "wallet",
         columns: [
           {
-            name: "userId",
+            name: "id",
             type: "uuid",
+            isPrimary: true,
           },
           {
-            name: "WalletName",
+            name: "userId",
+            type: "numeric",
+          },
+          {
+            name: "walletName",
             type: "varchar",
+          },
+          {
+            name: "coin",
+            type: "varchar",
+          },
+          {
+            name: "balance",
+            type: "decimal",
           },
         ],
         foreignKeys: [
           {
             name: "FK_User",
 
-            referencedTableName: "User",
+            referencedTableName: "user",
 
             referencedColumnNames: ["id"],
 
-            columnNames: ["UserId"],
+            columnNames: ["userId"],
             onDelete: "SET NULL",
             onUpdate: "SET NULL",
           },

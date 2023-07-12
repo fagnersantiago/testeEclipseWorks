@@ -1,7 +1,6 @@
 import { DataSource } from "typeorm";
 import { Seeder, SeederFactoryManager } from "typeorm-extension";
 import User from "../entities/User";
-import bcrypt from "bcrypt";
 
 export class UserSeeder implements Seeder {
   async run(
@@ -10,14 +9,46 @@ export class UserSeeder implements Seeder {
   ): Promise<void> {
     const userRepository = dataSource.getRepository(User);
 
-    const userData = {
-      name: "fagner Santiago",
-      email: "teste@gmail.com.br",
-      password: await bcrypt.hash("teste", 10),
-    };
+    const userData = [
+      {
+        id: 1,
+        name: "fagner Santiago",
+        email: "teste@gmail.com.br",
+      },
+      {
+        id: 2,
+        name: "José da Silva",
+        email: "jose@gmail.com.br",
+      },
+      {
+        id: 3,
+        name: "Maria aparecida",
+        email: "maria@gmail.com.br",
+      },
+      {
+        id: 4,
+        name: "João da Silva",
+        email: "joao@gmail.com.br",
+      },
+      {
+        id: 5,
+        name: "John doe",
+        email: "john@gmail.com.br",
+      },
+      {
+        id: 6,
+        name: "Carlos Almeida",
+        email: "carlos@gmail.com.br",
+      },
+      {
+        id: 7,
+        name: "André Bonifácio",
+        email: "andré@gmail.com.br",
+      },
+    ];
 
     const userExists = await userRepository.findOneBy({
-      email: userData.email,
+      email: userData[0].email,
     });
 
     if (!userExists) {
