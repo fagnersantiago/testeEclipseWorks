@@ -1,7 +1,7 @@
 import { DataSource } from "typeorm";
 import { Seeder, SeederFactoryManager } from "typeorm-extension";
-import Wallet from "../entities/Wallet";
-import User from "../entities/User";
+import Wallet from "../../../../entities/Wallet";
+import User from "../../../../entities/User";
 import { v4 as uuid } from "uuid";
 
 export class WalletSeeder implements Seeder {

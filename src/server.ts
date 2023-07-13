@@ -1,7 +1,9 @@
+import "reflect-metadata";
 import { app } from "./app";
-import { datasource } from "./database/index";
-//import "../../../shared/container";
+import { datasource } from "./modules/shared/database/index";
+import "../src/modules/shared/container/index";
 import "dotenv/config";
+
 const Port = process.env.PORT;
 
 datasource.initialize().then(() => {
