@@ -6,7 +6,7 @@ import { AppError } from "../../shared/appError/appError";
 class CreateOfferController {
   async handle(request: Request, response: Response): Promise<Response> {
     try {
-      const { price, quantity, coin, createdAt } = request.body;
+      const { price, offerQuantity, coin, createdAt } = request.body;
 
       const userId = parseInt(request.params.userId, 10);
       const { walletId } = request.params;
@@ -15,7 +15,7 @@ class CreateOfferController {
 
       const createOffer = await createOfferUsecase.execute({
         price,
-        quantity,
+        offerQuantity,
         coin,
         userId,
         walletId,

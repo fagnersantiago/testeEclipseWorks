@@ -1,7 +1,7 @@
 interface ICreateOfferDTO {
   id?: string;
   price: number;
-  quantity: number;
+  offerQuantity: number;
   coin: string;
   userId: number;
   walletId: string;

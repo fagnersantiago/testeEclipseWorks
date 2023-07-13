@@ -2,6 +2,8 @@ import { inject, injectable } from "tsyringe";
 import { IOfferRepository } from "../repositories/IOffer";
 import { ICreateOfferDTO } from "../dto/ICreateOfferDto";
 import Offer from "../entities/Offer";
+import dayjs from "dayjs";
+
 import { AppError } from "../../shared/appError/appError";
 
 @injectable()
@@ -13,7 +15,7 @@ class CreateOfferUsecase {
 
   async execute({
     price,
-    quantity,
+    offerQuantity,
     userId,
     coin,
     walletId,
@@ -25,18 +27,18 @@ class CreateOfferUsecase {
       if (balance && balance[0].balance <= 0) {
         throw new AppError("You have not balance in wallet");
       }
-      const quantityPerDay = await this.offerRepository.findOfferPerDay(
-        quantity
+
+      const offerDay = await this.offerRepository.findOfferPerDay(
+        offerQuantity
       );
 
-      if (quantityPerDay.quantity > 5) {
-        console.log("aqui");
-        throw new AppError("Exceeded maximum offer limit per day ");
+      if (!offerDay) {
+        offerDay.offerQuantity = 1;
       }
 
       const offer = await this.offerRepository.create({
         price,
-        quantity,
+        offerQuantity: offerDay.offerQuantity,
         userId,
         coin,
         walletId,

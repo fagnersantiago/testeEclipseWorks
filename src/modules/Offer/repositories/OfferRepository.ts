@@ -1,4 +1,5 @@
 import { datasource } from "../../shared/database";
+import dayjs from "dayjs";
 import Offer from "../entities/Offer";
 import Wallet from "../../../entities/Wallet";
 import User from "../../../entities/User";
@@ -20,7 +21,7 @@ class OfferRepository implements IOfferRepository {
 
   async create({
     price,
-    quantity,
+    offerQuantity,
     userId,
     coin,
     walletId,
@@ -34,7 +35,7 @@ class OfferRepository implements IOfferRepository {
 
     const offerCreated = this.offerRepository.create({
       price,
-      quantity,
+      offerQuantity,
       userId: user,
       coin,
       walletId: wallet,
@@ -54,8 +55,18 @@ class OfferRepository implements IOfferRepository {
     return walletBalance;
   }
 
-  async findOfferPerDay(quantity: number): Promise<Offer> {
-    return await this.offerRepository.findOne({ where: { quantity } });
+  async findOfferPerDay(offerQuantity: number): Promise<Offer> {
+    const offer = await this.offerRepository.findOne({
+      where: { offerQuantity },
+      order: { offerQuantity: "desc" },
+    });
+
+    if (dayjs().diff(offer.createdAt, "day") !== 0 && offer.offerQuantity > 5) {
+      throw new AppError("Exceeded maximum offer limit per day ");
+    }
+    offer.offerQuantity++;
+
+    return offer;
   }
 }
 

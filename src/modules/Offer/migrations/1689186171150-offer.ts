@@ -16,7 +16,7 @@ export class Offer1689186171150 implements MigrationInterface {
             type: "decimal",
           },
           {
-            name: "quantity",
+            name: "offerQuantity",
             type: "numeric",
           },
           {

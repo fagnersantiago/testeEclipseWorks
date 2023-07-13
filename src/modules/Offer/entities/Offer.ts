@@ -12,7 +12,7 @@ class Offer {
   price: number;
 
   @Column()
-  quantity: number;
+  offerQuantity: number;
 
   @Column()
   coin: string;

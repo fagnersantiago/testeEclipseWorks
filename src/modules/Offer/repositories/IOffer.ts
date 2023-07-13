@@ -5,7 +5,7 @@ import Wallet from "../../../entities/Wallet";
 interface IOfferRepository {
   create(data: ICreateOfferDTO): Promise<Offer>;
   findBalance(walletId: string, userId: number): Promise<Wallet[]>;
-  findOfferPerDay(quantity: number): Promise<Offer>;
+  findOfferPerDay(offerQuantity: number): Promise<Offer>;
 }
 
 export { IOfferRepository };
