@@ -95,6 +95,17 @@ class OfferRepository implements IOfferRepository {
 
     return filteredOffers;
   }
+
+  async delete(id: string, userId: number): Promise<void> {
+    const deleteOffer = await this.offerRepository.findOne({
+      where: { id: id, userId: { id: userId } },
+    });
+
+    if (deleteOffer) {
+      deleteOffer.deletedAt = new Date();
+      await this.offerRepository.save(deleteOffer);
+    }
+  }
 }
 
 export default OfferRepository;

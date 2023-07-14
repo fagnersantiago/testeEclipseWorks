@@ -7,6 +7,7 @@ interface IOfferRepository {
   CheckalletBalance(walletId: string, userId: number): Promise<Wallet[]>;
   checkDailyOfferLimit(offerQuantity: number): Promise<Offer>;
   findAll(page: number, pageSize: number): Promise<Offer[]>;
+  delete(id: string, userId: Number): Promise<void>;
 }
 
 export { IOfferRepository };

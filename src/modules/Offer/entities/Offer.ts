@@ -28,6 +28,9 @@ class Offer {
   @Column()
   createdAt: Date;
 
+  @Column()
+  deletedAt: Date;
+
   constructor() {
     if (!this.id) {
       this.id = uuid();

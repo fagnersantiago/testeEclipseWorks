@@ -37,6 +37,11 @@ export class Offer1689186171150 implements MigrationInterface {
             type: "timestamp",
             default: "now ()",
           },
+          {
+            name: "deletedAt",
+            type: "timestamp",
+            default: "now ()",
+          },
         ],
         foreignKeys: [
           {

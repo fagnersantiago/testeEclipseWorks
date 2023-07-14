@@ -9,3 +9,4 @@ container.registerSingleton<IOfferRepository>(
 );
 
 container.registerSingleton<IOfferRepository>("listOffer", OfferRepository);
+container.registerSingleton<IOfferRepository>("deleteOffer", OfferRepository);
