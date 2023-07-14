@@ -13,13 +13,13 @@ class DaleteOfferUseCase {
 
   async execute(id: string, userId: number): Promise<void> {
     try {
-      const offeexists = await this.offerRepository.findOfferById(id);
-      if (!offeexists) {
+      const offeExists = await this.offerRepository.findOfferById(id);
+      if (!offeExists) {
         throw new AppError("Offer not found");
       }
       const deleted = await this.offerRepository.delete(
-        offeexists.id,
-        Number(offeexists.userId)
+        offeExists.id,
+        Number(userId)
       );
 
       return deleted;

@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import Offer from "../entities/Offer";
 import Wallet from "../../../entities/Wallet";
 import User from "../../../entities/User";
-import { Repository, W } from "typeorm";
+import { IsNull, Repository, W } from "typeorm";
 import { ICreateOfferDTO } from "../dto/ICreateOfferDto";
 
 import { IOfferRepository } from "./IOffer";
@@ -89,8 +89,10 @@ class OfferRepository implements IOfferRepository {
 
     const currentDate = dayjs();
 
-    const filteredOffers = listAllOffer.filter((offer) =>
-      dayjs(offer.createdAt).isSame(currentDate, "day")
+    const filteredOffers = listAllOffer.filter(
+      (offer) =>
+        dayjs(offer.createdAt).isSame(currentDate, "day") &&
+        offer.deletedAt == null
     );
 
     return filteredOffers;

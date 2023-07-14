@@ -40,7 +40,7 @@ export class Offer1689186171150 implements MigrationInterface {
           {
             name: "deletedAt",
             type: "timestamp",
-            default: "now ()",
+            isNullable: true,
           },
         ],
         foreignKeys: [
