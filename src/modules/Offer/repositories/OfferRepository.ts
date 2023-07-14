@@ -75,6 +75,26 @@ class OfferRepository implements IOfferRepository {
     }
     return offer;
   }
+
+  async findAll(page: number, pageSize: number): Promise<Offer[]> {
+    const skip = (page - 1) * pageSize;
+
+    const listAllOffer = await this.offerRepository.find({
+      order: {
+        createdAt: "DESC",
+      },
+      skip,
+      take: pageSize,
+    });
+
+    const currentDate = dayjs();
+
+    const filteredOffers = listAllOffer.filter((offer) =>
+      dayjs(offer.createdAt).isSame(currentDate, "day")
+    );
+
+    return filteredOffers;
+  }
 }
 
 export default OfferRepository;

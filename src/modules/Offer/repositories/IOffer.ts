@@ -6,6 +6,7 @@ interface IOfferRepository {
   create(data: ICreateOfferDTO): Promise<Offer>;
   CheckalletBalance(walletId: string, userId: number): Promise<Wallet[]>;
   checkDailyOfferLimit(offerQuantity: number): Promise<Offer>;
+  findAll(page: number, pageSize: number): Promise<Offer[]>;
 }
 
 export { IOfferRepository };
