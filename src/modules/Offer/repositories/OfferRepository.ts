@@ -106,6 +106,9 @@ class OfferRepository implements IOfferRepository {
       await this.offerRepository.save(deleteOffer);
     }
   }
+  async findOfferById(id: string) {
+    return await this.offerRepository.findOne({ where: { id } });
+  }
 }
 
 export default OfferRepository;

@@ -8,6 +8,7 @@ interface IOfferRepository {
   checkDailyOfferLimit(offerQuantity: number): Promise<Offer>;
   findAll(page: number, pageSize: number): Promise<Offer[]>;
   delete(id: string, userId: Number): Promise<void>;
+  findOfferById(id: string): Promise<Offer>;
 }
 
 export { IOfferRepository };
