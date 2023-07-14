@@ -47,7 +47,7 @@ class OfferRepository implements IOfferRepository {
     return offerCreated;
   }
 
-  async findBalance(walletId: string, userId: number): Promise<Wallet[]> {
+  async CheckalletBalance(walletId: string, userId: number): Promise<Wallet[]> {
     const walletBalance = await this.walletRepository.find({
       where: { id: walletId, userId: { id: userId } },
     });
@@ -55,17 +55,24 @@ class OfferRepository implements IOfferRepository {
     return walletBalance;
   }
 
-  async findOfferPerDay(offerQuantity: number): Promise<Offer> {
-    const offer = await this.offerRepository.findOne({
+  async checkDailyOfferLimit(offerQuantity: number): Promise<Offer> {
+    let offer = await this.offerRepository.findOne({
       where: { offerQuantity },
       order: { offerQuantity: "desc" },
     });
 
-    if (dayjs().diff(offer.createdAt, "day") !== 0 && offer.offerQuantity > 5) {
-      throw new AppError("Exceeded maximum offer limit per day ");
+    if (!offer) {
+      offer = new Offer();
+      offer.offerQuantity = 0;
     }
-    offer.offerQuantity++;
 
+    const today = dayjs().diff(offer.createdAt, "day");
+
+    if (offer && today >= 0 && offer.offerQuantity >= 5) {
+      throw new AppError("Exceeded maximum offer limit per day ");
+    } else {
+      offer.offerQuantity++;
+    }
     return offer;
   }
 }

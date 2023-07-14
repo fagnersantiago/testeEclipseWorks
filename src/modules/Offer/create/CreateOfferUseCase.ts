@@ -2,7 +2,6 @@ import { inject, injectable } from "tsyringe";
 import { IOfferRepository } from "../repositories/IOffer";
 import { ICreateOfferDTO } from "../dto/ICreateOfferDto";
 import Offer from "../entities/Offer";
-import dayjs from "dayjs";
 
 import { AppError } from "../../shared/appError/appError";
 
@@ -22,23 +21,22 @@ class CreateOfferUsecase {
     createdAt,
   }: ICreateOfferDTO): Promise<Offer> {
     try {
-      const balance = await this.offerRepository.findBalance(walletId, userId);
+      const hasBalance = await this.offerRepository.CheckalletBalance(
+        walletId,
+        userId
+      );
 
-      if (balance && balance[0].balance <= 0) {
+      if (hasBalance && hasBalance[0].balance <= 0) {
         throw new AppError("You have not balance in wallet");
       }
 
-      const offerDay = await this.offerRepository.findOfferPerDay(
+      const offerPerDay = await this.offerRepository.checkDailyOfferLimit(
         offerQuantity
       );
 
-      if (!offerDay) {
-        offerDay.offerQuantity = 1;
-      }
-
       const offer = await this.offerRepository.create({
         price,
-        offerQuantity: offerDay.offerQuantity,
+        offerQuantity: offerPerDay.offerQuantity,
         userId,
         coin,
         walletId,
@@ -47,6 +45,7 @@ class CreateOfferUsecase {
 
       return offer;
     } catch (error) {
+      console.log(error);
       throw new AppError(error);
     }
   }
