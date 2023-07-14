@@ -40,7 +40,7 @@ Siga as etapas abaixo para configurar e executar o projeto:
 3. Execute as migrations para criar as tabelas no banco de dados. Execute o seguinte comando:
 
    ```shell
-   yarn typeorm migration:run
+   yarn typeorm
    ```
 
 4. Popule as tabelas de usuários e carteiras executando o comando de seed:
